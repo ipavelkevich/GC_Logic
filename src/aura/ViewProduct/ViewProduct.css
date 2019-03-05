@@ -1,0 +1,23 @@
+.THIS .circle{
+    width: 64px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    text-shadow: black 0 0 4px;
+    float: left;
+    font-weight: bold; 
+    font-size: 12pt;
+}
+
+@media only screen and (max-width: 600px) {
+    .THIS .circle{
+        width: 64px;
+        height: 52px;
+        border-radius: 50%;
+        color: white;
+        text-shadow: black 0 0 4px;
+        float: left;
+        font-weight: bold; 
+        font-size: 12pt;
+    }
+}

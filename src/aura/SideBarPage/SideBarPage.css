@@ -1,0 +1,40 @@
+.THIS .sidenav {
+    border-right:1px solid #e6e5e4;  
+}
+
+.THIS {
+    min-height:100%;
+}
+
+
+.THIS .btnTag{
+    padding-left: 0px;
+    padding-right: 0px; 
+    height: 22px;
+    width: 72px;
+    line-height: normal;
+}
+
+.THIS .miniLogo {
+    font-size:30px;
+    cursor:pointer;
+    padding-left: 3%;
+}
+
+.THIS .tagS {
+    font-size: .8125rem;
+    color: rgb(0, 109, 204);
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .test{
+    text-align: justify;
+}
+
+.THIS a:hover{
+    color: rgb(0, 109, 204);
+}

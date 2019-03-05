@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="compPerfom" type="GC_Profile__c"/>    
+    
+    <div class="slds-grid slds-grid--align-center">
+        <aura:if isTrue="{!v.compPerfom.Market__c == 'US'}">
+            <img src="{!$Resource.iconForCompanyColor + '/noun_usa_flagBLUE.png'}" alt="US" style="max-width:64px; max-height:64px;"/>
+            <aura:set attribute="else">
+                <img src="{!$Resource.iconForCompanyColor + '/noun_internationalBLUE.png'}" alt="International" style="max-width:64px; max-height:64px;"/>
+            </aura:set>
+        </aura:if>
+        <div class="slds-grid slds-grid--vertical-align-center" style="padding-left:10px;">
+            <div class="slds-text-heading--large">
+                {!v.compPerfom.Name}
+            </div>
+        </div>
+    </div>
+    <lightning:tabset selectedTabId="one">
+        <lightning:tab label="Profile" id="one">
+            <c:CompanyDetails compPerfom="{!v.compPerfom}"></c:CompanyDetails>
+        </lightning:tab>
+        <lightning:tab label="RSV Builder" id="two">
+            <c:Risk	
+                    aura:id="risk"
+                    compPerfom="{!v.compPerfom}"
+                    compPerfomId="{!v.compPerfom.Id}"
+                    ></c:Risk>
+        </lightning:tab> 
+    </lightning:tabset>
+</aura:component>

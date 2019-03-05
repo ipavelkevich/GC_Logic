@@ -1,0 +1,40 @@
+.THIS header.slds-card__header.slds-grid{
+    padding:0px;
+}
+
+.THIS.customCardClass > header.slds-card__header.slds-grid{
+    padding:0px;
+    width: 100%;
+}
+
+.THIS .mainBlock {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.THIS .marginZero {
+    margin: 0px;
+}
+
+.THIS .textD {
+    text-align: justify;
+}
+
+.THIS .margMain {
+    margin-top: 20px;
+}
+
+.THIS .linkName {
+    font-weight: bold; 
+    font-size: 18pt;
+    color: rgb(0, 95, 178);
+}
+
+.THIS .nav {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    background-color: white;
+    z-index: 9999999;
+}

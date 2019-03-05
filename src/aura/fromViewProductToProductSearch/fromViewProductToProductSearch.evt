@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="ProductRecordByEvent" type="Object"/>
+	<aura:attribute name="TagByEvent" type="Object"/>
+</aura:event>

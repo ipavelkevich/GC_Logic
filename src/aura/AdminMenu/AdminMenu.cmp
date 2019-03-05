@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">    
+    
+    <aura:handler  name="CloseAdminTab" event="c:CloseAdminTab" action="{!c.handleEvent}"/>    
+    <lightning:tabset selectedTabId="one" >
+        <lightning:tab label="GC Profiles" id="one">
+            <lightning:listView aura:id="listViewProfile"
+                                objectApiName="GC_Profile__c"
+                                listName="All"
+                                rows="50"
+                                showActionBar="true"
+                                enableInlineEdit="true"
+                                showRowLevelActions="true"
+                                showSearchBar="true"
+                                />
+        </lightning:tab>
+        <lightning:tab label="GC Products" id="two">
+            <lightning:listView aura:id="listViewProduct"
+                                objectApiName="Product__c"
+                                listName="All"
+                                rows="50"
+                                showActionBar="true"
+                                enableInlineEdit="true"
+                                showRowLevelActions="true"
+                                showSearchBar="true"
+                                />
+        </lightning:tab>
+        <lightning:tab label="Glossaries" id="three">
+            <lightning:listView aura:id="listViewGlosary"
+                                objectApiName="Glosary__c"
+                                listName="All"
+                                rows="50"
+                                showActionBar="true"
+                                enableInlineEdit="true"
+                                showRowLevelActions="true"
+                                showSearchBar="true"
+                                />
+        </lightning:tab>
+        <lightning:tab label="Tags" id="four">
+            <lightning:listView aura:id="listViewTags"
+                                objectApiName="Tag__c"
+                                listName="All"
+                                rows="50"
+                                showActionBar="true"
+                                enableInlineEdit="true"
+                                showRowLevelActions="true"
+                                showSearchBar="true"
+                                />
+        </lightning:tab>
+        
+    </lightning:tabset>    
+</aura:component>

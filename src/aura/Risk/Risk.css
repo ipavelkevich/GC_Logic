@@ -1,0 +1,92 @@
+.THIS .footer {
+    background: lightblue;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 1%;
+    right: 1%;
+    text-align: center;
+    z-index: 999;
+}
+
+.THIS .drawer {
+    background: #eeeeee;
+    padding: 0;
+    border-top:4px solid #0070d2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: left;
+    height: 0;
+    overflow: visible !important;
+    transition: 0.5s all ease; 
+}
+
+.THIS .drawer.open {
+    top: -250px;
+    height: 250px;
+    padding: 10px;
+}
+
+.THIS .drawer-button {
+    content: "Legal";
+    width: 100px;
+    height: 50px;
+    background: #0070d2;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+    position: absolute;
+    top: -50px;
+    left: 46.5%;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.THIS .drawer-content {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    background: #eeeeee; 
+    padding: 10px;
+    color:black;
+}
+
+.THIS i {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.THIS .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.THIS .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.THIS .alignHelp {
+    text-align: center;
+}
+
+.THIS .slds-file__crop {
+    z-index:0;
+}
+
+.THIS .slds-file__title_card {     
+    z-index:0; 
+}
+.THIS .previewCard {
+    z-index: 10;
+}
+
+.THIS .sWrapRSV {
+    height:100%;
+    width:100%;
+}

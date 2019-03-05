@@ -1,0 +1,107 @@
+.THIS .circle{
+    width: 64px;
+    height: 62px;
+    border-radius: 50%;
+    color: white;
+    text-shadow: black 0 0 4px;
+    float: left;
+    font-weight: bold; 
+    font-size: 12pt;
+}
+
+.THIS .alignCenter {
+    text-align:center;
+    margin:auto;  
+}
+
+.THIS :hover {
+    z-index:0;
+}
+
+.THIS :hover {     
+    z-index:0; 
+}
+
+.THIS .slds-file__crop{
+    z-index:0;
+}
+
+.THIS .slds-file__title_card{     
+    z-index:0; 
+}
+
+.THIS .marginTopHealp {
+    margin-top:20px;
+    margin: 0 auto;
+}
+
+.THIS .backgroundBlock {
+    background:#F5F5F5;
+    padding:20px;
+}
+
+.THIS .sizeLogo {
+    width:20%; 
+    height:auto;
+}
+
+.THIS .sizeHeaderBlockName {
+    font-size: 150%;
+    color:black;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.THIS .file {
+    text-align:center;
+    font-weight:bold;
+    font-size: 120%;
+    color:black;
+}
+
+.THIS .largeSizeFile {
+    display: table;
+    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.THIS .tagSFull {
+    border-style: solid;
+    border-width: 1px;	
+    padding: 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-color: rgba(0,126,255,0.24);
+    background: rgba(0,126,255,0.08);
+    border-radius: 2px;
+}
+
+@media only screen and (max-width: 600px) {
+    .THIS .sizeLogo {
+        width:200px; 
+        height:auto;
+    }
+    
+    .THIS .alignJustify {
+        text-align: justify;
+    }
+    
+    .THIS .backgroundBlockMobile {
+        background:#F5F5F5;
+    }
+    .THIS .paddingZero {
+        padding: 0px;
+    }
+    
+    .THIS .circle{
+        width: 80px;
+        height: 52px;
+        border-radius: 50%;
+        color: white;
+        text-shadow: black 0 0 4px;
+        float: left;
+        font-weight: bold; 
+        font-size: 12pt;
+    }
+}

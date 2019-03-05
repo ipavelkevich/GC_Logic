@@ -1,0 +1,82 @@
+.THIS button{
+    background-color: rgb(243, 242, 242);
+    height: 32px;
+    width: 100%;
+}
+.THIS lightning-primitive-icon{
+    padding-left: 10px;
+}
+
+.THIS div.slds-col{
+    padding-left: 25px;
+}
+
+.THIS li{
+    border-top-width: 0px;
+}
+
+.THIS section{
+    padding: 7px;
+}
+
+.THIS hr{
+    margin: 0%;
+}
+
+.THIS table{
+    min-width: 1100px;
+}
+
+.THIS .row {
+    padding: 5px 0;
+    margin-bottom: 15px;
+}
+
+.THIS.row .header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.THIS .bgc{
+    background-color: cornflowerblue;
+    font-size: 20px;
+    color: black;
+}
+
+.THIS .bgcR{
+    background-color:#e1e5ef;
+}
+
+.THIS div{
+    font-weight: bold;
+    color: black;
+}
+
+.THIS p{
+    font-weight: bold;
+    color: black;
+}
+
+.THIS span{
+    font-weight: bold;
+    color: black;
+}
+
+.THIS .slds-form-element__static{
+    font-weight: bold; 
+    color: black;
+}
+
+.THIS .slds-table tbody tr:hover td {
+    background-color: rgba( 48, 58, 85, 0.3);
+} 
+
+.THIS .slds-table tbody tr:hover th {
+    background-color: rgba( 48, 58, 85, 0.3);
+}
+
+.THIS .sWrapRSV {
+    height:100%;
+    width:100%;
+}

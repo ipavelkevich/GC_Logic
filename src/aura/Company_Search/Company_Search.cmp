@@ -1,0 +1,100 @@
+<aura:component controller="SearchCompanyController" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global">
+    
+    <aura:attribute name="selectedRecord" type="String" default="Search..."/>
+    <aura:attribute name="listOfSearchRecords" type="List"/>
+    <aura:attribute name="SearchKeyWord" type="string" default=""/>
+    <aura:attribute name="Message" type="String" default="Search Result.."/>
+    <aura:attribute name="CheckedInputValue" type="Boolean" default="false"/>
+    <aura:attribute name="CompanyCards" type="List" default='[]'/>
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <aura:attribute name="timer" type="Integer"/>
+    
+    <aura:attribute name="openCompanyTabs" type="Boolean" default="true"/>
+    <aura:attribute name="compPerfom" type="GC_Profile__c"/>
+    <aura:handler  name="compProfile" event="c:CompanyProfile" action="{!c.handleEvent}"/> 
+    
+    <!-- for infinitscrol -->
+    <aura:attribute name="amount" type="String" default="10" />  
+    <aura:attribute name="amount2" type="String" default="10" />
+    
+    <!-- Close dropdown -->
+    <aura:attribute name="closeOutsideDiv" type="Boolean" default="false"/>
+    <aura:attribute name="closeListController" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="oSelectedAccountEvent" event="c:selectedAccountEvent" action="{!c.handleComponentEvent}"/>
+    
+    <!-- get param from sideBar -->
+    <aura:handler event="c:fromSideBarPageToCompanySearch" action="{!c.actionFromSideBarController}"/>
+    
+    <div style="min-height:410px;" class="">
+        <aura:if isTrue="{!v.openCompanyTabs}">
+            <lightning:card title="" class="customCardClass">
+                <div class="mainBlock">
+                    <div aura:id="searchRes" class="slds-lookup slds-is-close"> 
+                        
+                        <div class="slds-form-element__control" tabindex="0" onblur="{!c.closeOutsideDiv}" onfocus="{!c.deactivationcloseOutsideDiv}">
+                            
+                            <div aura:id="lookup-pill" class="slds-pill-container"> 
+                                <div class="slds-form-element__control" style="width: 100%;z-index:0;">
+                                    <div class="slds-input-has-icon slds-input-has-icon--right">
+                                        <div aura:id="lookupField" class="slds-show" onkeyup="{!c.getAllAccount}" onclick="{!c.getAllAccount}" >
+                                            <lightning:input aura:id="searchIn"
+                                                             updateOn="keyup" 
+                                                             value="{!v.SearchKeyWord}"
+                                                             placeholder="{!v.selectedRecord}"
+                                                             onblur="{!c.closeListController}"
+                                                             onfocus="{!c.deactivationcloseListController}"
+                                                             type="search"
+                                                             variant = "label-hidden"
+                                                             />
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <ul style="min-height:40px;margin-top:0px;z-index: 10 !important" 
+                                    class="slds-listbox slds-lookup__list slds-listbox_vertical slds-dropdown slds-card__body_inner slds-dropdown_fluid slds-lookup__menu " 
+                                    role="listbox">
+                                    <aura:if isTrue="{! v.loaded }">
+                                        <div class="slds-lookup__item--label slds-text-body--small">{!v.Message}</div>
+                                        <aura:iteration items="{!v.listOfSearchRecords}" var="item">                                       
+                                            <c:customLookupResultCompany oAccount="{!item.obj}" active="{!item.bool}"/>
+                                        </aura:iteration>
+                                        <aura:set attribute="else">
+                                            <div class="slds-lookup__item--label slds-text-body--small">Search..</div>
+                                            <lightning:spinner alternativeText="Loading" />
+                                        </aura:set>
+                                    </aura:if>
+                                </ul>  
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- for infinit iscroll -->
+                <div class="">
+                    <div id="scroll" class="slds-col--padded slds-size--1-of-1">
+                        <lightning:card aura:id="mainCardCompanies" title="" class="margMain mainBlock">
+                            <aura:iteration items="{!v.CompanyCards}" var="company">
+                                <h1 class="margMain linkName">
+                                    <c:ViewCompany CompanyFromParent="{!company}"/>
+                                </h1>      
+                            </aura:iteration>
+                            <!-- slds-hide -->
+                            <div aura:id="ShowMoreBtn" class="margMain slds-hide slds-align_absolute-center">
+                                <lightning:button variant="brand" label="Show more" title="Show more" onclick="{! c.showMoreProfilesController }"/>    
+                            </div>
+                        </lightning:card>
+                    </div>     
+                </div>
+            </lightning:card>
+            <aura:set attribute="else">
+                <c:CompanyTabs compPerfom="{!v.compPerfom}"/>
+            </aura:set>
+        </aura:if> 
+    </div>
+</aura:component>

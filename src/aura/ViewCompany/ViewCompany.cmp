@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:registerEvent name="compProfile" type="c:CompanyProfile"/>
+    <aura:attribute name="CompanyFromParent" type="GC_Profile__c"  access="public"/>    
+    
+    <div>
+        <aura:if isTrue="{!v.CompanyFromParent.Market__c == 'US'}">
+            <img src="{!$Resource.iconForCompanyColor + '/noun_usa_flagBLUE.png'}" alt="US" style="max-width:64px; max-height:64px;"/>
+            <aura:set attribute="else">
+                <img src="{!$Resource.iconForCompanyColor + '/noun_internationalBLUE.png'}" alt="Internional" style="max-width:64px; max-height:64px;"/>
+            </aura:set>
+        </aura:if>  
+        <a id="{!v.CompanyFromParent.Id}" value="{!v.CompanyFromParent.Id}" onclick="{!c.handleClick}" style="margin-left:1%;">{!v.CompanyFromParent.Name}</a> 
+    </div>
+    <hr/>
+</aura:component>

@@ -1,0 +1,130 @@
+<aura:component controller="searchProductController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <!--declare attributes-->
+    <aura:attribute name="ProductCards" type="List" />
+    <aura:attribute name="CountSearchRezults" type="Integer" />
+    <aura:attribute name="lstSelectedRecords" type="sObject[]" default="[]"/>
+    <aura:attribute name="listOfSearchRecords" type="List"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="CheckInputKey" type="String" default=""/>
+    <aura:attribute name="CheckInputKeyFocus" type="String" default=""/>
+    <aura:attribute name="amount" type="String" default="10" />
+    <aura:attribute name="amount2" type="String" default="10" />
+    <aura:attribute name="maxLength" type="Integer" />
+    <aura:attribute name="startTuch" type="Object" />
+    <aura:attribute name="Message" type="String" default="Search Result.."/>
+    <aura:attribute name="timer" type="Integer"/>
+    <aura:attribute name="sizePills" type="Integer"/>
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    
+    <!-- switch render -->
+    <aura:attribute name="SwitchProductCards" type="Boolean" default="false"/>
+    <aura:handler name="change" value="{!v.ProductCards}" action="{!c.renderResultsController}"/>
+    
+    <!-- Close dropdown -->
+    <aura:attribute name="closeOutsideDiv" type="Boolean" default="false"/>
+    <aura:attribute name="closeListController" type="Boolean" default="false"/>
+    
+    <!-- switch button -->
+    <aura:attribute name="valueSwitchShow" type="Boolean" default="false"/>
+    <aura:attribute name="valueSwitch" type="Boolean" default="false"/>
+    
+    <!-- Full Page Product -->
+    <aura:attribute name="showPageFullProduct" type="Boolean" default="false"/>
+    
+    <!-- get param from viewProduct -->
+    <aura:attribute name="productSelectedViewFull" type="Object"/>
+    <aura:handler name="oFromVProductToProductSearch" event="c:fromViewProductToProductSearch" action="{!c.checkActionController}"/>
+    
+    <!-- get param from viewFullProduct -->
+    <aura:handler name="oFromVFProductToProductSearch" event="c:FromViewFullProductToProductSearch" action="{!c.addTagToPillsController}"/>
+    
+    <!-- get param from sideBar -->
+    <aura:handler event="c:fromSideBarPageToProductSearch" action="{!c.actionFromSideBarController}"/>
+    
+    <!--declare events hendlers--> 
+    <aura:handler name="init" value="{!this}" action="{!c.doInitController}" />
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedTagsRecordEvent" action="{!c.handleComponentEventController}"/>
+    
+    <!--onblur="{!c.closeListController}"-->
+    <div style="min-height:410px"> 
+        <lightning:card title='' class="customCardClass"> 
+            <div class="mainBlock scrollTest" id="overlay"> 
+                <div aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close ">
+                    <aura:if isTrue="{!v.showPageFullProduct}">
+                        <aura:set attribute="else">
+                            <div class="slds-form-element__control" tabindex="0" onblur="{!c.closeOutsideDiv}" onfocus="{!c.deactivationcloseOutsideDiv}">                       
+                                <div aura:id="lookup-pill" class="slds-pill-container">
+                                    <div aura:id="lookupField" class="slds-combobox__form-element slds-input-has-icon  slds-input-has-icon_right"  
+                                        style="width: 100%; z-index: 0;" onkeyup="{!c.arrowsController}">                  
+                                        <lightning:input aura:id="searchIn"
+                                                         onclick="{!c.onfocusController}" 
+                                                         onkeyup="{!c.keyPressController}"
+                                                         onblur="{!c.closeListController}"
+                                                         onfocus="{!c.deactivationcloseListController}"
+                                                         value="{!v.SearchKeyWord}"
+                                                         placeholder="Search..."
+                                                         type="search"
+                                                         variant = "label-hidden"
+                                                         />    
+                                    </div> 
+                                    
+                                        <aura:iteration items="{!v.lstSelectedRecords}" var="sr">
+                                            <lightning:pill aura:id="TagPills" class="slds-m-around_xx-small" label="{!'#' + sr.Name}" name="{!sr}" onremove="{! c.clearController }"/>
+                                        </aura:iteration>
+                                    <aura:if isTrue="{!v.valueSwitchShow}">
+                                        <div class="removeAllTagsButton">  
+                                            <lightning:button variant="base" label="X" title="Remove all tags" onclick="{! c.removeAllTagsController }"/>                           
+                                        </div>
+                                    </aura:if> 
+                                </div>
+                                <ul style="min-height:40px;margin-top:0px;z-index: 10 !important" 
+                                    class="slds-listbox slds-lookup__list slds-listbox_vertical slds-dropdown slds-card__body_inner slds-dropdown_fluid slds-lookup__menu " 
+                                    role="listbox">
+                                    
+                                    <aura:if isTrue="{! v.loaded }">
+                                        <center> {!v.Message}</center>
+                                        <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                                            <div onclick="{!c.doSearchController}">
+                                                <c:customLookupResultSearchProduct oRecord="{!singleRec}" active="{!singleRec.bool}"/>
+                                            </div>
+                                        </aura:iteration>
+                                        <aura:set attribute="else">
+                                            <div class="slds-lookup__item--label slds-text-body--small">Search..</div>
+                                            <lightning:spinner alternativeText="Loading" />
+                                        </aura:set>
+                                    </aura:if>
+                                </ul> 
+                            </div>
+                        </aura:set>
+                    </aura:if>             
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                        <div class="slds-col--padded slds-size--1-of-1 ">
+                            <aura:if isTrue="{!v.showPageFullProduct}">
+                                <c:viewFullProduct FullProductCardFromViewProduct="{!v.productSelectedViewFull}"/>
+                                <aura:set attribute="else">
+                                    <lightning:card aura:id="mainCardProducts" title="" class=" margMain ">
+                                        
+                                        <aura:if isTrue="{!v.valueSwitchShow}">
+                                            <lightning:input type="toggle" label="Match All" name="inputResizable" checked="{!v.valueSwitch}" onchange="{!c.doSearchController}"/>        
+                                        </aura:if>
+                                        <h3>
+                                            Search returned <span id="countSearch" >{!v.CountSearchRezults}</span> product(s)
+                                        </h3>
+                                        <hr class="marginZero" />
+                                        <div id="scroll" class="slds-col--padded slds-size--1-of-1">
+                                            {!v.body}
+                                            <div aura:id="ShowMoreBtn" class="margMain slds-hide slds-align_absolute-center">
+                                                <lightning:button variant="brand" label="Show more" title="Show more" onclick="{! c.showMoreController }"/>    
+                                            </div>
+                                        </div> 
+                                    </lightning:card>   
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </lightning:card> 
+    </div>
+</aura:component>

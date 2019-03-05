@@ -1,0 +1,15 @@
+<aura:component access="global">
+	<aura:attribute name="nameParent" type="String" />
+    <!-- This is the reference of Modal window -->
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-size_8-of-12">
+            <div class="slds-text-align_left slds-m-around_x-small slds-p-left_large slds-p-right_large ">
+                <h1 class="slds-page-header__title slds-align-middle">{!v.nameParent}</h1>
+            </div>            
+            <div class="slds-align_absolute-center">
+                <lightning:button label="Close" onclick="{!c.handleClose}" variant="brand" class="slds-m-top--medium"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

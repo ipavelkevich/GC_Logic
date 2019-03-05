@@ -1,0 +1,81 @@
+<aura:component controller="searchProductController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"> 
+    
+    <aura:attribute name="FullProductCardFromViewProduct" type="Object" access="public"/>
+    <aura:attribute name="EmployeeProduct" type="Object" access="public"/>
+    <aura:attribute name="fileContentVersionId" type="List" access="public"/>
+    <aura:attribute name="fileContentVersionIdLogo" type="String" access="public"/>
+    <aura:attribute name="lengthCheckFileContentVersionId" type="Boolean" default="false"/>
+    <aura:attribute name="styleVFP" type="String" default="background:SteelBlue;"/>
+    <aura:attribute name="forButton" type="Boolean" default="false"/>
+    <aura:handler name="change" value="{!v.lengthCheckFileContentVersionId}" action="{!c.showAllFilesButtonController}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInitController}" />
+    <aura:registerEvent name="oFromVFProductToProductSearch" type="c:FromViewFullProductToProductSearch"/>
+    
+    <lightning:card title=""  > 
+        <div class="slds-grid slds-grid--align-center ">
+            <div class="slds-grid slds-grid--vertical-align-center">
+                <div style="{!v.styleVFP}" class="circle slds-grid slds-grid--vertical-align-center slds-grid--align-center" >
+                    <div>{!v.FullProductCardFromViewProduct.product.Short_name__c}</div>
+                </div>
+                
+                <div class="slds-text-heading--large" style="padding-left:10px;">
+                    {!v.FullProductCardFromViewProduct.product.Name}
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters margMain">
+            <div class="slds-col slds-size_12-of-12">
+                <span>{!v.FullProductCardFromViewProduct.product.Short_description__c}</span>
+            </div>    
+        </div>
+        <div class="backgroundBlockMobile slds-grid slds-wrap slds-gutters " style="margin-top:40px;">
+            <div class="paddingZero slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="backgroundBlock " >
+                    <h3 class="sizeHeaderBlockName">Featured Resources</h3>
+                    <div class="file ">
+                        <div aura:id="attachmentFiles" class="largeSizeFile " style="z-index:-10;">                            
+                            <aura:iteration aura:id="iterFiles" items="{!v.fileContentVersionId}" var="fCvI" end="2">
+                                <lightning:fileCard fileId="{!fCvI.Id}" description="{!fCvI.Title}"/> 
+                                <br/>
+                            </aura:iteration>
+                            <aura:If isTrue="{!v.forButton}">
+                                <lightning:button class="marginTopHealp slds-show" aura:id="showAllButton" variant="brand" label="Show all" title="Show all files" onclick="{!c.showAllFilesController }" />
+                            </aura:If>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="paddingZero slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                <div class="backgroundBlock" >  
+                    <h3 class="sizeHeaderBlockName">Contact Information</h3>                  
+                    <div class="slds-text-heading_medium">
+                        <p>
+                            <lightning:formattedText value="{!v.EmployeeProduct.Name + ' '}"/>
+                        </p>
+                    </div>
+                    <p>
+                        <lightning:formattedEmail value="{!v.EmployeeProduct.Email_Address__c}"/>
+                    </p>
+                </div> 
+            </div> 
+        </div>
+        <div class="slds-grid slds-gutters" style="margin-top:40px;">
+            <div class="slds-col slds-size_1-of-1 backgroundBlock">
+                <h3 class="sizeHeaderBlockName">Product Information</h3>
+                <div aura:id ="pInfo" id="test" class="alignJustify">
+                    <lightning:formattedRichText aura:id="outputRT" value="{!v.FullProductCardFromViewProduct.product.Product_Information__c}" />
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters" style="margin-top:40px;">
+            <div class="slds-col slds-size_1-of-1 backgroundBlock">
+                <h3 class="sizeHeaderBlockName">Product Tags</h3>
+                <div class="slds-card__body_inner slds-grid slds-wrap slds-grid--pull-padded">
+                    <aura:iteration items="{!v.FullProductCardFromViewProduct.setTags}" var="tag">
+                        <a id="{!tag.Id}" onclick="{!c.sendTagToProductSearchController}" class="tagSFull">#{!tag.Name}</a>
+                    </aura:iteration>    
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

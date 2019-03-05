@@ -1,0 +1,404 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global">
+    
+    <aura:attribute name="compPerfom" type="GC_Profile__c"/>
+    <aura:attribute name="gcBoolean" type="Boolean" default="true"/>
+    
+    <aura:attribute name="Check" type="Boolean" default='false'/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:handler name="change" value="{!v.compPerfom}" action="{!c.doInit}"/>
+    
+    <form name="asd">
+        <div style="background:#f3f2f2;border:1px solid #ccc;padding:5px 10px;margin-top:5px;"><b>Company Overview</b></div>
+    </form>  
+    <div class="slds-grid slds-grid_align-space">
+        <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+            <span class="slds-form-element__label">Region</span><br/>
+            <ui:outputText value="{!v.compPerfom.Region__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">Operational</span><br/>
+            <ui:outputText value="{!v.compPerfom.Operational__c}" class="slds-form-element__static"/><hr/>
+        </div>
+        <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+            <span class="slds-form-element__label">Ownership</span><br/>
+            <ui:outputText value="{!v.compPerfom.Ownership__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">Best Ratings</span><br/>
+            <ui:outputText value="{!v.compPerfom.Best_Ratings__c}" class="slds-form-element__static"/><hr/>
+        </div>
+    </div>
+    <form name="asd">
+        <div style="background:#f3f2f2;border:1px solid #ccc;padding:5px 10px;margin-top:5px;"><b>Company Metrics</b></div>
+    </form>
+    <div class="slds-grid slds-grid_align-space">  
+        <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+            <span class="slds-form-element__label">Surplus</span><br/>
+            <ui:outputText value="{!'USD ' + v.compPerfom.Surplus__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">ROS %</span><br/>
+            <ui:outputText value="{!v.compPerfom.ROS__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">GWP</span><br/>
+            <ui:outputText value="{!'USD ' + v.compPerfom.GWP__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">NWP</span><br/>
+            <ui:outputText value="{!'USD ' + v.compPerfom.NWP__c}" class="slds-form-element__static"/><hr/>
+        </div>
+        <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+            <span class="slds-form-element__label">GWP Growth %</span><br/>
+            <ui:outputText value="{!v.compPerfom.GWP_Growth__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">Ceded Ratio %</span><br/>
+            <ui:outputText value="{!v.compPerfom.Ceded_Ratio__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">Net CR %</span><br/>
+            <ui:outputText value="{!v.compPerfom.Net_CR__c}" class="slds-form-element__static"/><hr/>
+            <span class="slds-form-element__label">Profitability Trend</span><br/>
+            <ui:outputText value="{!v.compPerfom.Profitability_Trend__c}" class="slds-form-element__static"/><hr/>
+        </div>
+    </div>
+    <aura:if isTrue="{!or(v.compPerfom.Market__c == 'International', v.compPerfom.Market__c == 'US', v.compPerfom.Market__c == 'us', v.compPerfom.Market__c == 'Us')}">
+        <form name="asd">
+            <div style="background:#f3f2f2;border:1px solid #ccc;padding:5px 10px;margin-top:5px;"><b>LOB Premium Detail</b></div>
+        </form>
+        <aura:if isTrue="{!or(v.compPerfom.Market__c == 'US', v.compPerfom.Market__c == 'us', v.compPerfom.Market__c == 'Us')}">
+            <div class="slds-grid slds-grid_align-space">  
+                <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+                    <span class="slds-form-element__label">Personal Lines Total</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Personal_Lines_Total__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">HO</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.HO__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Auto</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Auto__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Commercial Lines Total</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Commercial_Lines_Total__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Property</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Property__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Liability</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Liability__c}" class="slds-form-element__static"/><hr/> 
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+                    <span class="slds-form-element__label">WC</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.WC__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Specialty Lines Total</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Specialty_Lines_Total__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">AH</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.A_H__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Assumed Reins.</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Assumed_Reins__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Financial Lines(Surety, Mortgage, Credit)</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Financial_Lines_Surety_Mortgage_Credi__c}" class="slds-form-element__static"/><hr/>
+                    <span class="slds-form-element__label">Other (BM, Aircraft, Ocean Marine)</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Other_B_M_Aircraft_Ocean_Marine__c}" class="slds-form-element__static"/><hr/>   
+                </div>
+            </div> 
+        </aura:if>
+        <aura:if isTrue="{!v.compPerfom.Market__c == 'International'}">
+            <div class="slds-grid slds-grid_align-space">  
+                <div class="slds-col slds-large-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+                    <span class="slds-form-element__label">Non-Life GWP 2017/2016</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Non_Life_GWP_2017_2016__c}" class="slds-form-element__static"/><hr/>
+                </div>
+                <div class="slds-col slds-large-size_6-of-12 slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-p-horizontal_medium">
+                    <span class="slds-form-element__label">Non-Life NWP 2017/2016</span><br/>
+                    <ui:outputText value="{!'USD ' + v.compPerfom.Non_Life_NWP_2017_2016__c}" class="slds-form-element__static"/><hr/>
+                </div>
+            </div>
+        </aura:if>
+    </aura:if>
+    <!--Table slds-scrollable-->  
+    <div class="slds-m-top--x-large"> 
+        <ui:scrollerWrapper class="sWrapRSV">
+            <div id="recordViewForm" style="width: 100%; height:600px;">
+                
+                <table class="slds-table slds-table_bordered slds-table_col-bordered slds-table_fixed-layout" style="width: 100%">
+                    <thead>
+                        <tr class="slds-line-height_reset ">
+                            <th scope="col" colspan="8" class="slds-text-align_center bgc"><h3>GC - Capital</h3></th> 
+                        </tr> 
+                    </thead> 
+                    <tbody >
+                        <tr class="slds-hint-parent ">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Operating Metric</span>
+                            </th>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%">
+                                <span>Return on Surplus Avg.</span>
+                            </td>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%">
+                                <span>NPW/PHS</span>
+                            </td>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%"> 
+                                <span>Reserves/PHS</span>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent" >
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Relative Performance</span>
+                            </th>
+                            <td class="slds-text-align_center" style="width: 12.5%"> 
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td> 
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%"> 
+                                <span>Region: {!v.compPerfom.Region__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_ROS_AVG_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_ROS_AVG_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_NPW_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_NPW_PHS_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_RES_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_RES_PHS_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%"> 
+                                <span>Operational: {!v.compPerfom.Operational__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_ROS_AVG_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_ROS_AVG_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_NPW_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_NPW_PHS_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_RES_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_RES_PHS_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%"> 
+                                <span>Ownership: {!v.compPerfom.Ownership__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_ROS_AVG_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_ROS_AVG_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_NPW_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_NPW_PHS_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_RES_PHS_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_RES_PHS_Quartile__c}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+                <table class="slds-table slds-table_bordered slds-table_col-bordered slds-m-top--x-large slds-table_fixed-layout" style="width: 100%">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col" colspan="8" class="slds-text-align_center bgc"><h3>GC - Growth</h3></th> 
+                        </tr> 
+                    </thead> 
+                    <tbody >
+                        <tr class="slds-hint-parent">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Operating Metric</span>
+                            </th>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%">
+                                <span>Combined Ratio (C/R)</span>
+                            </td>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%">
+                                <span>NPE CAGR</span>
+                            </td>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%"> 
+                                <span>PHS CAGR</span>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent" >
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Relative Performance</span>
+                            </th>
+                            <td class="slds-text-align_center" style="width: 12.5%"> 
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td> 
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Region: {!v.compPerfom.Region__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_CR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_CR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_NPE_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_NPE_CAGR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_PHS_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_PHS_CAGR_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Operational: {!v.compPerfom.Operational__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_CR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_CR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_NPE_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_NPE_CAGR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_PHS_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_PHS_CAGR_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Ownership: {!v.compPerfom.Ownership__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_CR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_CR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_NPE_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_NPE_CAGR_Quartile__c}</div>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Ownership_PHS_CAGR_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Ownership_PHS_CAGR_Quartile__c}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="slds-table slds-table_bordered slds-table_col-bordered slds-m-top--x-large slds-table_fixed-layout" style="width: 100%;"> 
+                    <thead>
+                        <tr class="">
+                            <th scope="col" colspan="8" class="slds-text-align_center bgc"><h3>GC - Volatility</h3></th> 
+                        </tr> 
+                    </thead> 
+                    <tbody style="width: 50%;">
+                        <tr class="slds-hint-parent">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Operating Metric</span> 
+                            </th>
+                            <td colspan="2" class="slds-text-align_center" style="width: 25%">
+                                <span>ROE Vol. (5YR)</span>
+                            </td>
+                            <td colspan="4" rowspan="5" style="width: 50%; background-color: darkgray">
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent">
+                            <th scope="row" colspan="2"  style="width: 25%">
+                                <span>Relative Performance</span>
+                            </th>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Co. vs. AVG</span>
+                            </td>
+                            <td class="slds-text-align_center" style="width: 12.5%">
+                                <span>Quartile</span>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Region: {!v.compPerfom.Region__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Region_ROS_VOL_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Region_ROS_VOL_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 25%">
+                                <span>Operational: {!v.compPerfom.Operational__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <p>{!v.compPerfom.Operational_ROS_VOL_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 12.5%">
+                                <div>{!v.compPerfom.Operational_ROS_VOL_Quartile__c}</div>
+                            </td>
+                        </tr>
+                        <tr class="slds-hint-parent bgcR">
+                            <th scope="row" colspan="2" class=" " style="width: 50%">
+                                <span>Ownership: {!v.compPerfom.Ownership__c}</span>
+                            </th>
+                            <td class="slds-text-align_center txt" style="width: 25%">
+                                <p>{!v.compPerfom.Ownership_ROS_VOL_Benchmarking__c}</p>
+                            </td>
+                            <td class="slds-text-align_center txt" style="width: 25%">
+                                <div>{!v.compPerfom.Ownership_ROS_VOL_Quartile__c}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+        </ui:scrollerWrapper>
+    </div>
+    
+</aura:component>

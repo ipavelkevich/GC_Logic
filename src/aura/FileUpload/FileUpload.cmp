@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"  controller="FileUpload" extends="c:base">
+    <lightning:overlayLibrary aura:id="overlayLibFileUpload"/>
+        
+    <lightning:fileUpload label="Attach receipt"
+        name="fileUploader"
+        multiple="true"
+        recordId="{!v.recordId}"
+        onuploadfinished="{!c.uploadFinishedController}" />
+    
+</aura:component>

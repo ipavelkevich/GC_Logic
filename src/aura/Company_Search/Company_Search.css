@@ -1,0 +1,54 @@
+.THIS .margMain {
+    margin: 20px;
+}
+
+.THIS h3.grommetux-heading{
+    font-size:22px;
+}
+
+.THIS .linkName {
+    font-weight: bold; 
+    font-size: 18pt;
+}
+
+.THIS .textD {
+    width: 500px;
+}
+
+.THIS .inputSize {
+    width:100%; 
+}
+
+.THIS header.slds-card__header.slds-grid{
+    padding:0px;
+}
+
+.THIS.customCardClass > header.slds-card__header.slds-grid{
+    padding:0px;
+    width: 100%;
+}
+
+.THIS .mainBlock {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.THIS.scrollerSize {
+    height: 100%;
+    width: 100%;
+    border-radius: 1px;
+}
+
+.THIS .fixed {
+    position:   fixed;
+    top:        0;
+    bottom:     0;
+    left:       0;
+    right:      0;
+    border:     1px solid black;
+    background: white;
+}
+
+.THIS .scrolling {
+    top: 0;
+}

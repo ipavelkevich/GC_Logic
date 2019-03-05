@@ -1,0 +1,229 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" extends="c:base" controller="RSVBuilder">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.initController}"/>
+    <aura:attribute name="compPerfom" type="GC_Profile__c"/>
+    <aura:handler name="change" value="{!v.compPerfomId}" action="{!c.checkChangeController}"/>
+    
+    <aura:attribute name="compPerfomId" type="String"/>
+    <aura:attribute name="compPerfomIdOld" type="String"/>
+    
+    <aura:attribute name="risksDocs" type="Map"/>
+    <aura:attribute name="risksDocsDisplay" type="Map"/>
+    <aura:attribute name="risksDocsBottomBar" type="Map"/>
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:handler event="c:FromModalToRisk" action="{!c.saveNewWorkspaceController}"/>
+    
+    <!--for bottomBur -->
+    <aura:attribute name="description" type="String"/>
+    <aura:attribute name="prepareFor" type="String"/>    
+    <aura:attribute name="history" type="List" />
+    <!--for download-->
+    <aura:attribute name="href" type="String" />
+    <aura:attribute name="isButtonStatus" type="String" default="false"/>
+    
+    <!-- for drower button -->
+    <aura:attribute name="otherCapital" type="Boolean" default="false"/>
+    <aura:attribute name="otherGrowth" type="Boolean" default="false"/>
+    <aura:attribute name="otherVolatility" type="Boolean" default="false"/>
+    
+    <div class="slds-grid slds-wrap slds-grid--pull-padded">
+        <div class="slds-col--padded slds-size--1-of-1" >
+            <div class="slds-grid slds-grid--pull-padded">
+                <div class="slds-col--padded slds-size--1-of-1">
+                    <ul>
+                        <li>
+                            <lightning:icon iconName="standard:lightning_usage" size="large"/>
+                            <span style="margin-left:10px;font-size:18px;">Volatility</span>
+                            <div class="slds-grid slds-wrap">
+                                <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                    <aura:iteration items="{!key.value}" var="doc">
+                                        <aura:if isTrue="{!and((doc.Sub_type__c == 'Priority') , (doc.Type__c == 'Volatility'))}">
+                                            <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                <div style="margin-bottom:5px;">
+                                                    <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                </div>                                                    
+                                                <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>                                                   
+                                            </div>
+                                        </aura:if>                                
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </div>  
+                            <div class="slds-grid slds-wrap">
+                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                    <div aura:id="volatilitySMButton" class="slds-hide">
+                                        <aura:if isTrue="{!v.otherVolatility}">
+                                            <aura:set attribute="else">
+                                                <lightning:button value="otherVolatility" variant="brand" label="Show more" onclick="{!c.showMoreController}" />
+                                            </aura:set>
+                                            <lightning:button value="otherVolatility" variant="brand" label="Show less" onclick="{!c.showLessController}" />
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div> 
+                            <aura:if isTrue="{!v.otherVolatility}">
+                                <div class="slds-grid slds-wrap">
+                                    <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                        <aura:iteration items="{!key.value}" var="doc">
+                                            <aura:if isTrue="{!and((doc.Sub_type__c == 'Other') , (doc.Type__c == 'Volatility'))}">
+                                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                    <div style="margin-bottom:5px;">
+                                                        <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                    </div>                                                     
+                                                    <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>                                                       
+                                                </div>
+                                            </aura:if>                                
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </div>   
+                            </aura:if>   
+                        </li>
+                        <li>
+                            <lightning:icon iconName="standard:account" size="large"/>
+                            <span style="margin-left:10px;font-size:18px;">Growth</span>
+                            <div class="slds-grid slds-wrap">
+                                <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                    <aura:iteration items="{!key.value}" var="doc">
+                                        <aura:if isTrue="{!and((doc.Sub_type__c == 'Priority') , (doc.Type__c == 'Growth'))}">
+                                            <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                <div style="margin-bottom:5px;">
+                                                    <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                </div>
+                                                <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/> 
+                                            </div>
+                                        </aura:if>                                
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                    <div aura:id="growthSMButton" class="slds-hide">
+                                        <aura:if isTrue="{!v.otherGrowth}">
+                                            <aura:set attribute="else">
+                                                <lightning:button value="otherGrowth" variant="brand" label="Show more" onclick="{!c.showMoreController}" />
+                                            </aura:set>
+                                            <lightning:button value="otherGrowth" variant="brand" label="Show less" onclick="{!c.showLessController}" />
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div> 
+                            <aura:if isTrue="{!v.otherGrowth}">
+                                <div class="slds-grid slds-wrap">                                   
+                                    <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                        <aura:iteration items="{!key.value}" var="doc">
+                                            <aura:if isTrue="{!and((doc.Sub_type__c == 'Other') , (doc.Type__c == 'Growth'))}">
+                                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                    <div style="margin-bottom:5px;">
+                                                        <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                    </div>                                                      
+                                                    <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>                                                     
+                                                </div>
+                                            </aura:if>                                
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </div> 
+                            </aura:if>  
+                        </li>
+                        <li>
+                            <lightning:icon iconName="standard:partner_fund_request" size="large"/>
+                            <span style="margin-left:10px;font-size:18px;">Capital</span>
+                            <div class="slds-grid slds-wrap">
+                                <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                    <aura:iteration items="{!key.value}" var="doc">
+                                        <aura:if isTrue="{!and((doc.Sub_type__c == 'Priority') , (doc.Type__c == 'Capital'))}">
+                                            <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                <div style="margin-bottom:5px;">
+                                                    <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                </div>                                                   
+                                                <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>                                                  
+                                            </div>
+                                        </aura:if>                                
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </div> 
+                            <div class="slds-grid slds-wrap">
+                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                    <div aura:id="capitalSMButton" class="slds-hide">
+                                        <aura:if isTrue="{!v.otherCapital}">
+                                            <aura:set attribute="else">
+                                                <lightning:button value="otherCapital" variant="brand" label="Show more" onclick="{!c.showMoreController}" />
+                                            </aura:set>
+                                            <lightning:button value="otherCapital" variant="brand" label="Show less" onclick="{!c.showLessController}" />
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div> 
+                            <aura:if isTrue="{!v.otherCapital}">                                        
+                                <div class="slds-grid slds-wrap">
+                                    <aura:iteration items="{!v.risksDocsDisplay}" var="key">
+                                        <aura:iteration items="{!key.value}" var="doc">
+                                            <aura:if isTrue="{!and((doc.Sub_type__c == 'Other') , (doc.Type__c == 'Capital'))}">
+                                                <div class="previewCard slds-col slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12" style="margin-top:10px; margin-bottom:20px;z-index:0;">
+                                                    <div style="margin-bottom:5px;">
+                                                        <ui:inputCheckbox aura:id="test" value="{!doc.checked}" text="{!doc.Id}" change="{!c.onCheckController}"/>
+                                                    </div>                                                     
+                                                    <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>                                                       
+                                                </div>
+                                            </aura:if>                                
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </div>   
+                            </aura:if>
+                        </li>
+                    </ul>  
+                </div> 
+            </div>
+        </div>
+        <div class="slds-col--padded slds-size--1-of-1">
+            <div class="footer" style="z-index: 1;">
+                <div class="drawer alignHelp" id="drawer" >
+                    <div class="drawer-button slds-grid slds-grid--align-center"  id="drawer-button" onclick="{!c.drawerSlideController}">
+                        <i id="up" class="arrow up" ></i>
+                        <i id="down" style="display:none;" class="arrow down"></i>
+                    </div>
+                    <div class="drawer-content"> 
+                        <ui:scrollerWrapper class="sWrapRSV">
+                            <div class="slds-grid slds-wrap ">
+                                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">
+                                    <lightning:button variant="brand" label="Create new Workspace" title="Create new Workspace" onclick="{!c.openModalCreateWorkspaceController}"  /> 
+                                </div>
+                                <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">
+                                    <lightning:button variant="brand" label="Delete Workspace" title="Delete Workspace" onclick="{!c.deleteWorkspaceController}" disabled="{!v.history.length == 1}" /> 
+                                </div>
+                                <div aura:id="downloadButtonDiv" class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="margin-bottom:10px;">
+                                    <lightning:button aura:id="downloadButton" variant="brand" label="Build" title="Build" onclick="{!c.downloadController}" disabled="{!v.isButtonStatus}"/>                                   
+                                </div>
+                            </div>
+                            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <div class="slds-grid slds-grid--align-center" >
+                                    <div style="width:80%;padding-bottom:10px;">
+                                        <lightning:select aura:id="select" name="select" label="Workspace" onchange="{! c.changeWorkspaceController }">
+                                            <aura:iteration items="{!v.history}" var="option">
+                                                <option text="{!option.Prepared_For__c}" value="{!option.Id}" />
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>   
+                            <div class="slds-grid slds-wrap">
+                                <aura:iteration items="{!v.risksDocsBottomBar}" var="key">
+                                    <aura:iteration items="{!key.value}" var="doc">
+                                        <aura:if isTrue="{!doc.checked == true}">
+                                            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_3-of-12">
+                                                <div class="slds-grid slds-grid--align-center" style="padding-bottom:10px;">
+                                                    <!--ui:inputCheckbox aura:id="inp" value="{!doc.checked}" text="{!doc.Id}" click="{!c.onCheckRSVController}"/-->                                    
+                                                    <lightning:fileCard fileId="{!doc.ContentDocumentId}" description="{!doc.ContentDocument.Title}"/>
+                                                </div>
+                                            </div>
+                                        </aura:if>   
+                                    </aura:iteration>
+                                </aura:iteration> 
+                            </div>
+                        </ui:scrollerWrapper>
+                    </div>     
+                </div>
+            </div>
+        </div> 
+    </div>
+</aura:component>

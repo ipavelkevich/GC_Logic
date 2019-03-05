@@ -1,0 +1,5 @@
+<!--fromSideBarPageToProductSearch-->
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="boolleanFalse" type="boolean"/>
+    <aura:attribute name="TagByEvent" type="Object"/>
+</aura:event>

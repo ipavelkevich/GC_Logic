@@ -1,0 +1,25 @@
+<aura:component >
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:attribute name="descriptionModal" type="String"/>
+    <aura:attribute name="prepareForModal" type="String"/> 
+    <aura:attribute name="historyOld" type="List" />
+    <aura:registerEvent name="oFromModalToRisk" type="c:FromModalToRisk"/>
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-4" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:input label="Description" value="{!v.descriptionModal}" required="true" /> 
+        </div>
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-4" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:input label="Prepare For" value="{!v.prepareForModal}" required="true" /> 
+        </div>
+    </div>
+    <div style="padding-top:20px;">
+        <div class="slds-modal__footer" style="background-color:white;">
+            <ui:button label="Close" press="{!c.closeModalCreateWorkspaceController}"  />
+            <ui:button label="Save" press="{!c.sendToRiskController}"  />
+        </div>
+    </div>   
+</aura:component>

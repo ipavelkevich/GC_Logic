@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="descriptionModalEvent" type="String"/>
+    <aura:attribute name="prepareForModalEvent" type="String"/> 
+</aura:event>

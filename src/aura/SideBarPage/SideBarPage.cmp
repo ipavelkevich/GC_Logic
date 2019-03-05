@@ -1,0 +1,100 @@
+<aura:component controller="searchProductController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <ltng:require styles="{!$Resource.SideBarPageCss}"/>
+    
+    <aura:attribute name="show" type="Boolean" default="false"/>
+    <aura:attribute name="amountAllTags" type="Integer"/> 
+    <aura:attribute name="admin" type="Boolean" default="false"/>
+    <aura:attribute name="showTags" type="Boolean" default="true"/>
+    <aura:attribute name="adminProfile" type="Boolean" default="false"/>
+    <aura:attribute name="company" type="GC_Profile__c"/>
+    
+    <aura:attribute name="Product_Search" type="Boolean" default="true"/>
+    <aura:attribute name="Company_Search" type="Boolean" default="false"/>
+    <aura:attribute name="KeyTerms" type="Boolean" default="false"/>
+    <aura:attribute name="AdminMenu" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <aura:registerEvent name="CloseAdminTab" type="c:CloseAdminTab"/>
+    <aura:registerEvent name="oFromSideBarPageToProductSearch" type="c:fromSideBarPageToProductSearch"/>
+    <aura:registerEvent name="oFromSideBarPageToCompanySearch" type="c:fromSideBarPageToCompanySearch"/>
+    
+    <aura:attribute name="listTags" type="List"/> 
+    
+    <lightning:card title="">
+        <div id="sideBarMain" style="float:top;">
+            <div id="mySidenav" class="sidenav">
+                <legend class="slds-nav-vertical__title"><span style="font-size:30px;cursor:pointer" class="" onclick="{!c.openNav}"><img src="{!$Resource.logo}"/></span> GC LoGiC <a href="javascript:void(0)" class="closebtn" onclick="{!c.closeNav}">&times;</a></legend>                       
+                <span class="slds-nav-vertical__item">
+                    <input type="radio" id="products-span" name="example" value="products-span" onclick="{!c.tabsProductSearch}"/>
+                    <label class="slds-nav-vertical__action" for="products-span">
+                        <span class="slds-nav-vertical_radio-faux">Product Search</span>
+                    </label>
+                </span>
+                <span class="slds-nav-vertical__item">
+                    <input type="radio" id="company-span" name="example" value="company-span" onclick="{!c.tabsCompanySearch}"/> 
+                    <label class="slds-nav-vertical__action" for="company-span">
+                        <span class="slds-nav-vertical_radio-faux">Company Search</span>
+                    </label>
+                </span>  
+                <span class="slds-nav-vertical__item">
+                    <input type="radio" id="key-span" name="example" value="key-span" onclick="{!c.tabsKeyTerms}"/>
+                    <label class="slds-nav-vertical__action" for="key-span">
+                        <span class="slds-nav-vertical_radio-faux">Key Terms</span>
+                    </label>
+                </span>
+                <aura:If isTrue="{!v.adminProfile}">
+                    <span class="slds-nav-vertical__item">
+                        <input type="radio" id="admin-span" name="example" value="admin-span" onclick="{!c.tabsAdminMenu}"/>
+                        <label class="slds-nav-vertical__action" for="admin-span">
+                            <span class="slds-nav-vertical_radio-faux">Admin Menu</span>
+                        </label>
+                    </span>
+                </aura:If>
+                <aura:If isTrue="{!v.showTags}">
+                    <lightning:card title="">
+                        <div aura:id="linksTags" class="margMain slds-visible">
+                            <div class="slds-card__body_inner slds-grid slds-wrap slds-grid--pull-padded slds-align_absolute-center" >
+                                <aura:iteration items="{!v.listTags}" var="tag">
+                                    <div class="slds--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                        <a class="tagS">
+                                            <span id="{!tag.Id}" onclick="{!c.sendTagToProductSearchController}" 
+                                                  class="slds-listbox__option-text slds-listbox__option-text_entity" >#{!tag.Name}</span>
+                                        </a>
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                            <div class="slds-card__body_inner slds-grid slds-wrap slds-grid--pull-padded slds-align_absolute-center" >
+                                <lightning:button aura:id="visibilityBtnShowAll" class="slds-visible btnTag" label="Show All" onclick="{! c.clickBtnShowAllController }"/>
+                            </div>
+                        </div> 
+                    </lightning:card>
+                </aura:If>
+            </div>  
+            <span class="miniLogo" onclick="{!c.openNav}"><img src="{!$Resource.logo}"/></span>
+        </div>
+        <div id="main">
+            <lightning:layout>
+                <lightning:layoutItem flexibility="auto" size="12" padding="around-small">
+                    
+                    <aura:If isTrue="{!v.Product_Search}">
+                        <c:Product_Search/>
+                    </aura:If>
+                    
+                    <aura:If isTrue="{!v.Company_Search}">
+                        <c:Company_Search/> 
+                    </aura:If>      
+                    
+                    <aura:If isTrue="{!v.KeyTerms}">
+                        <c:KeyTerms/>
+                    </aura:If>
+                    
+                    <aura:If isTrue="{!v.AdminMenu}">
+                        <c:AdminMenu/>
+                    </aura:If>
+                    
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div> 
+    </lightning:card>
+</aura:component>

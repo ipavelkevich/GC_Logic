@@ -1,0 +1,43 @@
+<aura:component controller="FileUpload">
+    
+    
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initController}"/>
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="fileDetails" type="List"/>
+    
+    <aura:attribute name="lstPickvalsType" type="List"/>
+    <aura:attribute name="lstPickvalsSubType" type="List"/>
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:select aura:id="type" name="type" label="Type">
+                <aura:iteration items="{!v.lstPickvalsType}" var="type">
+                    <option value="{!type}">{!type}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:input aura:id="title" label="Title" name="title" value="{!v.fileDetails[0].Title}"/>
+        </div>
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:select aura:id="subtype" name="subtype" label="Subtype">
+                <aura:iteration items="{!v.lstPickvalsSubType}" var="subType">
+                    <option value="{!subType}">{!subType}</option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+        <div class="slds-col slds-size--1-of-1" style="padding-right: 20px;padding-left: 20px;">
+            <lightning:textarea aura:id="description" label="Description" name="description" value="{!v.fileDetails[0].Description}"/>
+        </div>
+    </div>
+    <div style="padding-top:20px;">
+        <div class="slds-modal__footer" style="background-color:white;">
+            <ui:button label="Close" press="{!c.closeModalUploadFileController}"  />
+            <ui:button label="Save" press="{!c.saveUploadFileController}"  />
+        </div>
+    </div>   
+    
+</aura:component>

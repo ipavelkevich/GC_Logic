@@ -1,0 +1,23 @@
+<aura:component controller="GlosaryControlller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="GlosaryCards" type="List" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:card title='' class="customCardClass"> 
+        <div class="mainBlock"> 
+            <div class="slds-form-element slds-lookup slds-is-close ">
+                <div class="slds-text-heading--large">Key Terms</div>
+                <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                    <div class="slds-col--padded slds-size--1-of-1 ">
+                        <lightning:card title="" >
+                            <aura:iteration items="{!v.GlosaryCards}" var="GlosaryCard">
+                                <c:ViewKeyTerm GlosaryCardFromParent="{!GlosaryCard}" />
+                            </aura:iteration> 
+                        </lightning:card>   
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </lightning:card>    
+</aura:component>

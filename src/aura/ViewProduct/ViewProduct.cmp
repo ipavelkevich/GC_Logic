@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInitController}" />
+    <aura:attribute name="ProductCardFromProductSearch" type="Object" access="public"/>
+    <aura:attribute name="styleVP" type="String"/>
+    <aura:registerEvent name="oFromVProductToProductSearch" type="c:fromViewProductToProductSearch"/>
+    
+    <lightning:card aura:id="CardProducts" title="">
+        <div class="slds-grid slds-grid--vertical-align-center">    
+            <div style="{!v.styleVP}" class="circle slds-grid slds-grid--vertical-align-center slds-grid--align-center" >
+                <div>{!v.ProductCardFromProductSearch.product.Short_name__c}</div>
+            </div>
+            <h1 class="linkName"  style="padding-left: 1%; width:100%">
+                <a aura:id="nameProduct" onclick="{!c.sendObjectToProductSearchController}">{!v.ProductCardFromProductSearch.product.Name}</a>  
+            </h1>
+        </div>
+        <p class="margMain textD">
+            {!v.ProductCardFromProductSearch.product.Short_description__c}
+        </p>
+        <div aura:id="linksTags" class="margMain">
+            <div class="slds-card__body_inner slds-grid slds-wrap slds-grid--pull-padded" >
+                <aura:iteration items="{!v.ProductCardFromProductSearch.setTags}" var="tag">
+                    <a id="{!tag.Id}" onclick="{!c.sendTagToProductSearchController}" class="tagS">#{!tag.Name}</a>
+                </aura:iteration> 
+            </div>
+        </div>
+    </lightning:card>
+    <hr class="marginZero"/>
+</aura:component>
